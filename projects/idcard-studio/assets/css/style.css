@@ -1,0 +1,306 @@
+/* ID Card Studio Custom CSS stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Roboto:wght@300;400;500;700;900&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap');
+
+:root {
+    --primary-indigo: #6366F1;
+    --primary-indigo-hover: #4f46e5;
+    --primary-teal: #14B8A6;
+    --sidebar-bg: #0F172A;
+    --surface-alt: #F1F5F9;
+    --surface-main: #FFFFFF;
+    --border-subtle: #E2E8F0;
+    --font-inter: 'Inter', sans-serif;
+}
+
+body {
+    font-family: var(--font-inter);
+    background-color: var(--surface-alt);
+    color: #1e293b;
+    overflow-x: hidden;
+}
+
+/* Sidebar Custom Styling */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    width: 260px;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar .nav-link {
+    color: #94a3b8;
+    padding: 0.75rem 1rem;
+    margin: 0.25rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar .nav-link:hover {
+    color: #f8fafc;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sidebar .nav-link.active {
+    color: #ffffff;
+    background-color: rgba(99, 102, 241, 0.15);
+    border-left: 4px solid var(--primary-indigo);
+    border-radius: 0 0.5rem 0.5rem 0;
+    margin-left: 0;
+}
+
+/* Main Content Area adjustments */
+.main-wrapper {
+    margin-left: 260px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+/* Canvas Grid Pattern */
+.bg-grid-pattern {
+    background-size: 30px 30px;
+    background-image: linear-gradient(to right, rgba(226, 232, 240, 0.6) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(226, 232, 240, 0.6) 1px, transparent 1px);
+}
+
+/* 3D Flip Card Styles */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+.card-flip-container {
+    width: 320px;
+    height: 508px; /* CR80 Standard vertical ratio 2.125 / 3.375 */
+    position: relative;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-flip-container.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 1.25rem;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--border-subtle);
+    display: flex;
+    flex-direction: column;
+}
+
+.card-face-front {
+    z-index: 2;
+    transform: rotateY(0deg);
+}
+
+.card-face-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+
+/* Hologram Overlay Animation */
+.hologram-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0;
+    mix-blend-mode: overlay;
+    background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 0, 128, 0.1) 25%,
+        rgba(0, 255, 255, 0.1) 50%,
+        rgba(255, 255, 0, 0.1) 75%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    background-size: 200% 200%;
+    transition: opacity 0.5s ease;
+}
+
+.hologram-active .hologram-overlay {
+    opacity: 0.5;
+    animation: hologramGlow 4s linear infinite alternate;
+}
+
+@keyframes hologramGlow {
+    0% {
+        background-position: 0% 0%;
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        background-position: 100% 100%;
+        filter: hue-rotate(360deg);
+    }
+}
+
+/* Checkbox Toggle Custom Style */
+.form-switch .form-check-input {
+    width: 2.75em;
+    height: 1.5em;
+}
+.form-switch .form-check-input:checked {
+    background-color: var(--primary-indigo);
+    border-color: var(--primary-indigo);
+}
+
+/* Bento Style Cards */
+.bento-card {
+    background: var(--surface-main);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03), 0 2px 4px -1px rgba(0, 0, 0, 0.02);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.bento-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+}
+
+/* Barcode Simulation */
+.barcode-sim {
+    height: 40px;
+    background-image: repeating-linear-gradient(
+        to right,
+        #1e293b 0px,
+        #1e293b 2px,
+        transparent 2px,
+        transparent 5px,
+        #1e293b 5px,
+        #1e293b 8px,
+        transparent 8px,
+        transparent 10px,
+        #1e293b 10px,
+        #1e293b 11px,
+        transparent 11px,
+        transparent 14px
+    );
+}
+
+/* Color Circle Picker */
+.color-picker-dot {
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.2s, border-color 0.2s;
+    padding: 0;
+}
+.color-picker-dot:hover {
+    transform: scale(1.15);
+}
+.color-picker-dot.active {
+    border-color: #000;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.8) inset;
+}
+
+/* Stepper Navigation Style */
+.stepper-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 1rem 0;
+}
+.stepper-line {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background-color: #cbd5e1;
+    z-index: 1;
+}
+.stepper-line-active {
+    position: absolute;
+    top: 35px;
+    left: 0;
+    height: 3px;
+    background-color: var(--primary-indigo);
+    z-index: 2;
+    transition: width 0.5s ease-in-out;
+}
+.step-item {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+}
+.step-circle {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 2px solid #cbd5e1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #64748b;
+    transition: all 0.3s;
+}
+.step-item.active .step-circle {
+    background-color: var(--primary-indigo);
+    border-color: var(--primary-indigo);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+}
+.step-item.completed .step-circle {
+    background-color: #10B981;
+    border-color: #10B981;
+    color: #ffffff;
+}
+.step-label {
+    margin-top: 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.step-item.active .step-label {
+    color: var(--primary-indigo);
+}
+.step-item.completed .step-label {
+    color: #10B981;
+}

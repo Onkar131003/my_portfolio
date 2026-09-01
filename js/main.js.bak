@@ -1,0 +1,320 @@
+document.addEventListener("DOMContentLoaded", () => {
+    // 1. Loading Screen Animation (Introduction Loader)
+    const loader = document.querySelector(".style-module-scss-module__u-Ka2a__introduction");
+    const greetings = ["Hello", "Namaste", "Bonjour", "Ciao", "Hola", "Kush Agrawal"];
+    
+    if (loader) {
+        // Ensure loader is styled correctly
+        loader.style.zIndex = "999"; // Stay on top
+        loader.style.position = "fixed";
+        loader.style.inset = "0";
+        loader.style.backgroundColor = "#141516";
+        loader.style.display = "flex";
+        loader.style.justifyContent = "center";
+        loader.style.alignItems = "center";
+        loader.style.overflow = "hidden";
+        
+        // Add a text element inside if none exists
+        let textEl = loader.querySelector("p");
+        if (!textEl) {
+            textEl = document.createElement("p");
+            loader.appendChild(textEl);
+        }
+        
+        // Style the greeting paragraph
+        textEl.style.color = "#ffffff";
+        textEl.style.fontSize = "clamp(2rem, 6vw, 3.5rem)";
+        textEl.style.fontFamily = "var(--font-inter), sans-serif";
+        textEl.style.fontWeight = "500";
+        textEl.style.margin = "0";
+        textEl.style.zIndex = "1000";
+        
+        let currentWordIndex = 0;
+        
+        function cycleWords() {
+            if (currentWordIndex < greetings.length) {
+                textEl.textContent = greetings[currentWordIndex];
+                textEl.style.opacity = "1";
+                textEl.style.transform = "translateY(0)";
+                textEl.style.transition = "transform 0.2s ease, opacity 0.2s ease";
+                
+                setTimeout(() => {
+                    // Start fading out before switching word
+                    textEl.style.opacity = "0";
+                    textEl.style.transform = "translateY(-15px)";
+                    textEl.style.transition = "transform 0.15s ease, opacity 0.15s ease";
+                    
+                    setTimeout(() => {
+                        currentWordIndex++;
+                        cycleWords();
+                    }, 150);
+                }, 200);
+            } else {
+                // End of greetings - slide up the loading screen
+                loader.style.transform = "translateY(-100%)";
+                loader.style.transition = "transform 0.85s cubic-bezier(0.76, 0, 0.24, 1)";
+                
+                // Animate header and content entrance once loader slides up
+                setTimeout(() => {
+                    animateHeaderEntrance();
+                    triggerImmediateScrollIntersection();
+                }, 100);
+                
+                // Remove loader from DOM after transition completes
+                setTimeout(() => {
+                    loader.style.display = "none";
+                }, 900);
+            }
+        }
+        
+        // Start the greeting cycle
+        cycleWords();
+    } else {
+        // No loader on this page - animate entrance immediately
+        animateHeaderEntrance();
+        triggerImmediateScrollIntersection();
+    }
+
+    // Header Entrance Animation function
+    function animateHeaderEntrance() {
+        const header = document.getElementById("global-header");
+        const burgerContainer = document.getElementById("global-burger-container");
+        
+        if (header) {
+            header.style.opacity = "1";
+            header.style.transform = "translateY(0)";
+            header.style.transition = "transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.8s ease";
+        }
+        
+        if (burgerContainer) {
+            burgerContainer.style.transform = "scale(1)";
+            burgerContainer.style.transition = "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1)";
+        }
+    }
+
+    // Scroll Header Style switch
+    window.addEventListener("scroll", () => {
+        const header = document.getElementById("global-header");
+        if (!header) return;
+        if (window.scrollY > 50) {
+            header.classList.add("styleheader-module-scss-module__WEgd9a__headerFloating");
+        } else {
+            header.classList.remove("styleheader-module-scss-module__WEgd9a__headerFloating");
+        }
+    });
+
+    // 2. Mobile Menu Burger Click
+    const burgerBtn = document.getElementById("global-burger-btn");
+    const burgerIcon = document.getElementById("global-burger-icon");
+    const nav = document.getElementById("global-nav");
+
+    if (burgerBtn && nav) {
+        burgerBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const isExpanded = burgerIcon.classList.contains("styleheader-module-scss-module__WEgd9a__burgerActive");
+            
+            if (isExpanded) {
+                burgerIcon.classList.remove("styleheader-module-scss-module__WEgd9a__burgerActive");
+                nav.classList.remove("styleheader-module-scss-module__WEgd9a__shownav");
+            } else {
+                burgerIcon.classList.add("styleheader-module-scss-module__WEgd9a__burgerActive");
+                nav.classList.add("styleheader-module-scss-module__WEgd9a__shownav");
+            }
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener("click", (e) => {
+            if (!nav.contains(e.target) && !burgerBtn.contains(e.target)) {
+                burgerIcon.classList.remove("styleheader-module-scss-module__WEgd9a__burgerActive");
+                nav.classList.remove("styleheader-module-scss-module__WEgd9a__shownav");
+            }
+        });
+    }
+
+    // 3. Active Nav Link Styling
+    const path = window.location.pathname;
+    const navLinks = document.querySelectorAll("#global-nav a");
+    navLinks.forEach(link => {
+        const dataNav = link.getAttribute("data-nav");
+        let isActive = false;
+        
+        if (dataNav === "home" && (path === "/" || path === "/index.html")) {
+            isActive = true;
+        } else if (path.includes("/" + dataNav)) {
+            isActive = true;
+        }
+        
+        if (isActive) {
+            link.classList.add("styleheader-module-scss-module__WEgd9a__elActive");
+        } else {
+            link.classList.remove("styleheader-module-scss-module__WEgd9a__elActive");
+        }
+    });
+
+    // 4. Staggered Word Slide-Up (Mask text)
+    const animatedWords = document.querySelectorAll(".styledesc-module-scss-module__Uf2pWa__mask span");
+    if (animatedWords.length > 0) {
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animatedWords.forEach((wordSpan, index) => {
+                        setTimeout(() => {
+                            wordSpan.style.transform = "translateY(0)";
+                            wordSpan.style.transition = "transform 0.8s cubic-bezier(0.22, 1, 0.36, 1)";
+                        }, index * 25);
+                    });
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        const container = document.querySelector(".styledesc-module-scss-module__Uf2pWa__body");
+        if (container) {
+            observer.observe(container);
+        }
+    }
+
+    // 5. Project Accordion Case Studies
+    const projects = document.querySelectorAll(".style-module-scss-module__g_CNKG__project");
+    projects.forEach(project => {
+        project.addEventListener("click", () => {
+            const panelId = project.getAttribute("aria-controls");
+            const panel = document.getElementById(panelId);
+            const indicator = project.querySelector(".style-module-scss-module__g_CNKG__indicator");
+            
+            if (!panel) return;
+            
+            const isExpanded = project.getAttribute("aria-expanded") === "true";
+            
+            // Collapse all other projects first
+            projects.forEach(otherProj => {
+                if (otherProj !== project) {
+                    otherProj.setAttribute("aria-expanded", "false");
+                    const otherPanelId = otherProj.getAttribute("aria-controls");
+                    const otherPanel = document.getElementById(otherPanelId);
+                    if (otherPanel) {
+                        otherPanel.setAttribute("aria-hidden", "true");
+                        otherPanel.style.maxHeight = null;
+                        otherPanel.classList.remove("style-module-scss-module__g_CNKG__panelExpanded");
+                    }
+                    const otherIndicator = otherProj.querySelector(".style-module-scss-module__g_CNKG__indicator");
+                    if (otherIndicator) {
+                        otherIndicator.textContent = "+";
+                        otherIndicator.style.transform = "rotate(0)";
+                    }
+                }
+            });
+            
+            // Toggle current project
+            if (isExpanded) {
+                project.setAttribute("aria-expanded", "false");
+                panel.setAttribute("aria-hidden", "true");
+                panel.style.maxHeight = null;
+                panel.classList.remove("style-module-scss-module__g_CNKG__panelExpanded");
+                if (indicator) {
+                    indicator.textContent = "+";
+                    indicator.style.transform = "rotate(0)";
+                }
+            } else {
+                project.setAttribute("aria-expanded", "true");
+                panel.setAttribute("aria-hidden", "false");
+                panel.style.maxHeight = panel.scrollHeight + "px";
+                panel.classList.add("style-module-scss-module__g_CNKG__panelExpanded");
+                if (indicator) {
+                    indicator.textContent = "−";
+                    indicator.style.transform = "rotate(180deg)";
+                    indicator.style.transition = "transform 0.4s ease";
+                }
+            }
+        });
+    });
+
+    // 6. Certifications 3D Stacked Card Deck Swap
+    const cards = document.querySelectorAll(".card-swap-container .card");
+    if (cards.length > 0) {
+        let cardArray = Array.from(cards);
+        
+        function updateDeck() {
+            cardArray.forEach((card, index) => {
+                card.style.zIndex = 10 - index;
+                const scale = 1 - (index * 0.05);
+                const translateY = index * 12;
+                const rotateY = -index * 3;
+                const translateZ = -index * 20;
+                
+                card.style.transform = `translate(-50%, -50%) translateZ(${translateZ}px) translateY(${translateY}px) rotateY(${rotateY}deg) scale(${scale})`;
+                card.style.transition = "transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease, z-index 0.6s ease";
+                
+                if (index === 0) {
+                    card.style.opacity = "1";
+                    card.style.cursor = "pointer";
+                    card.style.pointerEvents = "auto";
+                } else {
+                    card.style.opacity = (1 - index * 0.15).toString();
+                    card.style.cursor = "default";
+                    card.style.pointerEvents = "none";
+                }
+            });
+        }
+        
+        updateDeck();
+        
+        const container = document.querySelector(".card-swap-container");
+        if (container) {
+            container.addEventListener("click", () => {
+                const topCard = cardArray.shift();
+                topCard.style.transform = "translate(50%, -50%) rotate(15deg) scale(0.9)";
+                topCard.style.opacity = "0";
+                cardArray.push(topCard);
+                
+                setTimeout(() => {
+                    updateDeck();
+                }, 150);
+            });
+        }
+    }
+
+    // 7. General Scroll Intersection Observer for pre-hidden elements (style="opacity:0")
+    function triggerImmediateScrollIntersection() {
+        const preHiddenElements = document.querySelectorAll('[style*="opacity:0"], [style*="opacity: 0"]');
+        
+        const observerOptions = {
+            threshold: 0.05,
+            rootMargin: "0px 0px -50px 0px"
+        };
+        
+        const scrollObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const el = entry.target;
+                    
+                    // Set transition first to ensure animation works
+                    el.style.transition = "transform 1.2s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.2s ease";
+                    
+                    // Force reflow
+                    void el.offsetHeight;
+                    
+                    // Trigger animation
+                    el.style.opacity = "1";
+                    
+                    const inlineStyle = el.getAttribute("style") || "";
+                    if (inlineStyle.includes("transform")) {
+                        el.style.transform = "translateX(0) translateY(0) scale(1)";
+                    }
+                    scrollObserver.unobserve(el);
+                }
+            });
+        }, observerOptions);
+        
+        preHiddenElements.forEach(el => {
+            if (el.id !== "global-header") {
+                scrollObserver.observe(el);
+            }
+        });
+    }
+});

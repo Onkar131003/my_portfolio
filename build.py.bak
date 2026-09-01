@@ -1,0 +1,181 @@
+import os
+
+workspace = r"d:\impdata\crome downlode\clone"
+src_dir = os.path.join(workspace, "src")
+
+
+pages_config = {
+    "home": {
+        "src": "home_clean.html",
+        "dest": "index.html",
+        "title": "Kush Agrawal | Full-Stack Developer, Technical Author & Data Analyst",
+        "description": "Portfolio and technical blog of Kush Agrawal — Full-Stack Developer, published author of 4 CS textbooks, and cybersecurity practitioner. Projects in AI, data analytics, and real-time web applications.",
+        "canonical": "https://kushagrawal.in/"
+    },
+    "about": {
+        "src": "about_clean.html",
+        "dest": "about/index.html",
+        "title": "About Kush Agrawal | Full-Stack Developer & Author",
+        "description": "Learn more about Kush Agrawal: B.Tech CSE Student, Technical Author, Data Analytics Learner, and Full Stack Developer.",
+        "canonical": "https://kushagrawal.in/about"
+    },
+    "projects": {
+        "src": "projects_clean.html",
+        "dest": "projects/index.html",
+        "title": "Projects | Kush Agrawal",
+        "description": "Technical case studies and engineering projects by Kush Agrawal covering AI, Data Analytics, and Full-Stack Development.",
+        "canonical": "https://kushagrawal.in/projects"
+    },
+    "books": {
+        "src": "books_clean.html",
+        "dest": "books/index.html",
+        "title": "Publications | Kush Agrawal",
+        "description": "Technical textbooks and publications by Kush Agrawal covering IoT, C Programming, Object Oriented Programming, and Computer Architecture.",
+        "canonical": "https://kushagrawal.in/books"
+    },
+    "blog": {
+        "src": "blog_clean.html",
+        "dest": "blog/index.html",
+        "title": "Blog | Kush Agrawal",
+        "description": "Sharing practical knowledge, tutorials, project breakdowns, engineering insights, cybersecurity learnings, AI development experiences, and data analytics workflows.",
+        "canonical": "https://kushagrawal.in/blog"
+    },
+    "resume": {
+        "src": "resume_clean.html",
+        "dest": "resume/index.html",
+        "title": "Resume & Professional Profile | Kush Agrawal",
+        "description": "Digital resume and professional dashboard of Kush Agrawal: Full-Stack Developer, Technical Author, and Data Analytics enthusiast.",
+        "canonical": "https://kushagrawal.in/resume"
+    },
+    "project_gotrip": {
+        "src": "project_gotrip_clean.html",
+        "dest": "projects/gotrip/index.html",
+        "title": "GoTrip | Kush Agrawal Case Study",
+        "description": "Case study of GoTrip: AI-powered travel companion and itinerary planner built with Next.js, Node.js, and Redis.",
+        "canonical": "https://kushagrawal.in/projects/gotrip"
+    },
+    "project_blinkit": {
+        "src": "project_blinkit_clean.html",
+        "dest": "projects/blinkit/index.html",
+        "title": "Blinkit Dashboard | Kush Agrawal Case Study",
+        "description": "Case study of Blinkit quick-commerce dashboard built with Power BI, Python, and DAX for delivery operational intelligence.",
+        "canonical": "https://kushagrawal.in/projects/blinkit"
+    },
+    "project_hr_analytics": {
+        "src": "project_hr_analytics_clean.html",
+        "dest": "projects/hr-analytics/index.html",
+        "title": "HR Analytics | Kush Agrawal Case Study",
+        "description": "Case study of HR Analytics: predictive insights into workforce health and attrition patterns using Python, SQL, and Tableau.",
+        "canonical": "https://kushagrawal.in/projects/hr-analytics"
+    },
+    "project_snapverse": {
+        "src": "project_snapverse_clean.html",
+        "dest": "projects/snapverse/index.html",
+        "title": "SnapVerse | Kush Agrawal Case Study",
+        "description": "Case study of SnapVerse: real-time community social platform with infinite scroll and Socket.io messaging.",
+        "canonical": "https://kushagrawal.in/projects/snapverse"
+    },
+    "book_iot": {
+        "src": "book_iot_clean.html",
+        "dest": "books/fundamentals-of-internet-of-things/index.html",
+        "title": "Fundamentals of Internet of Things | Kush Agrawal",
+        "description": "Technical textbook on IoT architecture, connectivity protocols, and smart systems design by author Kush Agrawal.",
+        "canonical": "https://kushagrawal.in/books/fundamentals-of-internet-of-things"
+    },
+    "book_ca": {
+        "src": "book_ca_clean.html",
+        "dest": "books/computer-architecture/index.html",
+        "title": "Computer Architecture | Kush Agrawal",
+        "description": "Core computer science textbook covering hardware structures, instruction sets, CPU mechanics, and execution pipelining by author Kush Agrawal.",
+        "canonical": "https://kushagrawal.in/books/computer-architecture"
+    },
+    "book_c": {
+        "src": "book_c_clean.html",
+        "dest": "books/basic-programming-with-c/index.html",
+        "title": "Basic Programming with C | Kush Agrawal",
+        "description": "Student-friendly textbook covering foundational principles of the C programming language by author Kush Agrawal.",
+        "canonical": "https://kushagrawal.in/books/basic-programming-with-c"
+    },
+    "book_oop": {
+        "src": "book_oop_clean.html",
+        "dest": "books/concepts-of-object-oriented-programming/index.html",
+        "title": "Concepts of Object Oriented Programming | Kush Agrawal",
+        "description": "Core concepts of OOP, class design, patterns, and Java implementation textbook by author Kush Agrawal.",
+        "canonical": "https://kushagrawal.in/books/concepts-of-object-oriented-programming"
+    },
+    "blog_gotrip": {
+        "src": "blog_gotrip_clean.html",
+        "dest": "blog/how-i-built-gotrip-using-ai/index.html",
+        "title": "How I Built GoTrip Using AI | Kush Agrawal Blog",
+        "description": "Technical write-up detailing OpenAI/Gemini API stream orchestrations and Next.js layout structures behind GoTrip.",
+        "canonical": "https://kushagrawal.in/blog/how-i-built-gotrip-using-ai"
+    },
+    "blog_security": {
+        "src": "blog_security_clean.html",
+        "dest": "blog/cybersecurity-internship-learnings/index.html",
+        "title": "Cybersecurity Internship Learnings | Kush Agrawal Blog",
+        "description": "A review of ethical hacking methodologies, Wireshark packet audits, and network vulnerability checks from my cybersecurity internship.",
+        "canonical": "https://kushagrawal.in/blog/cybersecurity-internship-learnings"
+    },
+    "blog_jwt": {
+        "src": "blog_jwt_clean.html",
+        "dest": "blog/jwt-authentication-best-practices/index.html",
+        "title": "JWT Authentication Best Practices | Kush Agrawal Blog",
+        "description": "Deep dive into secure tokens storage, cookie configs, rotation, and route protection strategies for modern APIs.",
+        "canonical": "https://kushagrawal.in/blog/jwt-authentication-best-practices"
+    },
+    "blog_python": {
+        "src": "blog_python_clean.html",
+        "dest": "blog/data-analytics-workflow-using-python/index.html",
+        "title": "Data Analytics Workflow Using Python | Kush Agrawal Blog",
+        "description": "Technical guide covering Pandas aggregation routines, cleaning steps, and dashboard mapping procedures.",
+        "canonical": "https://kushagrawal.in/blog/data-analytics-workflow-using-python"
+    },
+    "blog_portfolio": {
+        "src": "blog_portfolio_clean.html",
+        "dest": "blog/building-modern-nextjs-portfolio/index.html",
+        "title": "Building a Modern Next.js Portfolio | Kush Agrawal Blog",
+        "description": "Details on CSS modular styles, animation hooks, and optimization tricks for developer portfolio design.",
+        "canonical": "https://kushagrawal.in/blog/building-modern-nextjs-portfolio"
+    }
+}
+
+def main():
+    layout_path = os.path.join(workspace, "src", "templates", "layout.html")
+    header_path = os.path.join(workspace, "src", "templates", "header.html")
+    
+    with open(layout_path, "r", encoding="utf-8") as f:
+        layout = f.read()
+        
+    with open(header_path, "r", encoding="utf-8") as f:
+        header = f.read()
+        
+    for name, config in pages_config.items():
+        src_path = os.path.join(src_dir, "site_content", config["src"])
+        dest_path = os.path.join(workspace, config["dest"].replace("/", os.sep))
+        
+        if not os.path.exists(src_path):
+            print(f"Error: source path {src_path} not found.")
+            continue
+            
+        with open(src_path, "r", encoding="utf-8") as f:
+            content = f.read()
+            
+        # Compile
+        page_html = layout
+        page_html = page_html.replace("{{title}}", config["title"])
+        page_html = page_html.replace("{{description}}", config["description"])
+        page_html = page_html.replace("{{canonical}}", config["canonical"])
+        page_html = page_html.replace("{{header}}", header)
+        page_html = page_html.replace("{{content}}", content)
+        
+        # Make sure destination folder exists
+        os.makedirs(os.path.dirname(dest_path), exist_ok=True)
+        
+        with open(dest_path, "w", encoding="utf-8") as f:
+            f.write(page_html)
+            
+        print(f"Compiled page: {config['dest']}")
+
+if __name__ == "__main__":
+    main()
