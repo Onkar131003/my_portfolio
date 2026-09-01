@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     // 0. Initialize Lenis Smooth Scroll (Disabled to restore native browser scrolling)
     let lenis;
+    let cinematicIntroComplete = false;
 
     // Initialize GSAP and ScrollTrigger
     if (typeof gsap !== "undefined" && typeof ScrollTrigger !== "undefined") {
@@ -25,10 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 scrollTrigger: {
                     trigger: cinematicWrapper,
                     start: "top top",
-                    end: "+=120%", // scroll height to play the full zoom
+                    end: "+=120%",
                     scrub: true,
                     pin: true,
-                    anticipatePin: 1
+                    anticipatePin: 1,
+                    pinSpacing: true,
+                    onToggle: self => {
+                        document.body.style.overflow = self.isActive ? "" : "";
+                    }
                 }
             });
             
@@ -56,6 +61,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 cinematicTimeline.to(frameGlow, { opacity: 0, duration: 0.3, ease: "power1.out" }, 0.55);
             }
             
+            // Mark cinematic intro complete and release pointer events
+            cinematicTimeline.call(() => {
+                cinematicIntroComplete = true;
+                cinematicWrapper.style.pointerEvents = "none";
+                pinnedViewport.style.pointerEvents = "none";
+            });
+
             // Step 7: Fade overlays and make pinned viewport transparent
             cinematicTimeline.to(pinnedViewport, { backgroundColor: "rgba(10, 10, 12, 0)", duration: 0.15, ease: "none" }, 0.8);
             if (filmGrain) {
